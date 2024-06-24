@@ -25,3 +25,12 @@ body {
     text-wrap: balance;
   }
 }
+
+.text-wrap {
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+.break-words {
+  word-break: break-word;
+}

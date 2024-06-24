@@ -1,13 +1,11 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'flowbite-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectFlip, Pagination, Navigation } from 'swiper/modules';
+import { EffectFlip } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/effect-flip';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 
 const AddCard = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -15,6 +13,45 @@ const AddCard = () => {
     const [frontText, setFrontText] = useState<string>('');
     const [backText, setBackText] = useState<string>('');
     const [imageText, setImageText] = useState<string>('');
+    const defaultImage = 'giraffe.png';
+
+    useEffect(() => {
+        if (selectedCard === 'card1') {
+            const frontTextElement = document.getElementById('card1-front-text');
+            const backTextElement = document.getElementById('card1-back-text');
+            const imageElement = document.getElementById('card1-image');
+
+            if (frontTextElement) {
+                frontTextElement.innerText = frontText;
+            }
+
+            if (backTextElement) {
+                backTextElement.innerText = backText;
+            }
+
+            if (imageElement) {
+                const img = new Image();
+                img.src = imageText;
+                img.onload = () => {
+                    imageElement.src = imageText;
+                };
+                img.onerror = () => {
+                    imageElement.src = defaultImage;
+                };
+            }
+        } else if (selectedCard === 'card2') {
+            const frontTextElement = document.getElementById('card2-front-text');
+            const backTextElement = document.getElementById('card2-back-text');
+
+            if (frontTextElement) {
+                frontTextElement.innerText = frontText;
+            }
+
+            if (backTextElement) {
+                backTextElement.innerText = backText;
+            }
+        }
+    }, [frontText, backText, imageText, selectedCard]);
 
     const isFormValid = () => {
         if (selectedCard === 'card1') {
@@ -23,7 +60,7 @@ const AddCard = () => {
             return frontText.trim() !== '' && backText.trim() !== '';
         }
         return false;
-    }
+    };
 
     const handleAcceptClick = () => {
         if (isFormValid()) {
@@ -34,12 +71,17 @@ const AddCard = () => {
             }
             setOpenModal(false);
         }
-    }
+    };
 
     return (
         <>
             <div className="flex justify-center">
-                <div className='text-black bg-green-400 mt-5 outline outline-2 rounded-lg w-fit text-center p-2 cursor-pointer' onClick={() => setOpenModal(true)}>Add Card</div>
+                <div
+                    className='text-black bg-green-400 mt-5 outline outline-2 rounded-lg w-fit text-center p-2 cursor-pointer'
+                    onClick={() => setOpenModal(true)}
+                >
+                    Add Card
+                </div>
             </div>
 
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
@@ -50,16 +92,16 @@ const AddCard = () => {
                             <Swiper
                                 effect={'flip'}
                                 grabCursor={true}
-                                modules={[EffectFlip,]}
-                                className="mySwiper w-[200px] h-[200px]"
+                                modules={[EffectFlip]}
+                                className="mySwiper w-[180px] h-[200px]"
                             >
                                 <SwiperSlide>
                                     <div
                                         className={`bg-blue-200 h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                         onClick={() => setSelectedCard('card1')}
                                     >
-                                        <p className='text-black text-sm text-center'>What animal is this?</p>
-                                        <img className='w-2/3' src='giraffe.png' alt='Giraffe' />
+                                        <p className='text-wrap text-black text-sm text-center break-words' id='card1-front-text'>What animal is this?</p>
+                                        <img className='w-2/3' src={defaultImage} alt='Giraffe' id='card1-image'/>
                                     </div>
                                 </SwiperSlide>
                                 <SwiperSlide>
@@ -67,18 +109,35 @@ const AddCard = () => {
                                         className={`bg-blue-200 h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                         onClick={() => setSelectedCard('card1')}
                                     >
-                                        <p className='text-black text-xl text-center'>Giraffe</p>
-                                        
+                                        <p className='text-wrap text-black text-xl text-center break-words' id='card1-back-text'>Giraffe</p>
                                     </div>
                                 </SwiperSlide>
                             </Swiper>
-                            <div
-                                className={`bg-blue-200 h-40 w-[180px] ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''}`}
-                                id='Card 2'
-                                onClick={() => setSelectedCard('card2')}
+                            <Swiper
+                                effect={'flip'}
+                                grabCursor={true}
+                                modules={[EffectFlip]}
+                                className="mySwiper w-[180px] h-[200px]"
                             >
-                            </div>
+                                <SwiperSlide>
+                                    <div
+                                        className={`bg-blue-200 h-full w-full ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
+                                        onClick={() => setSelectedCard('card2')}
+                                    >
+                                        <p className='text-wrap text-black text-xl text-center break-words' id='card2-front-text'>What continent is Japan?</p>
+                                    </div>
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <div
+                                        className={`bg-blue-200 h-full w-full ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
+                                        onClick={() => setSelectedCard('card2')}
+                                    >
+                                        <p className='text-wrap text-black text-2xl text-center break-words' id='card2-back-text'>Asia</p>
+                                    </div>
+                                </SwiperSlide>
+                            </Swiper>
                         </div>
+
                         <div>
                             <p className='text-black mt-3'>Front Text</p>
                             <input 
@@ -112,7 +171,7 @@ const AddCard = () => {
                 </Modal.Footer>
             </Modal>
         </>
-    )
-}
+    );
+};
 
 export default AddCard;
