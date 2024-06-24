@@ -1,6 +1,13 @@
 "use client";
 import React, { useState } from 'react';
 import { Modal, Button } from 'flowbite-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectFlip, Pagination, Navigation } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/effect-flip';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 const AddCard = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -18,6 +25,17 @@ const AddCard = () => {
         return false;
     }
 
+    const handleAcceptClick = () => {
+        if (isFormValid()) {
+            console.log('Front Text:', frontText);
+            console.log('Back Text:', backText);
+            if (selectedCard === 'card1') {
+                console.log('Image Text:', imageText);
+            }
+            setOpenModal(false);
+        }
+    }
+
     return (
         <>
             <div className="flex justify-center">
@@ -28,14 +46,32 @@ const AddCard = () => {
                 <Modal.Header>Add Card</Modal.Header>
                 <Modal.Body>
                     <div className="space-y-6">
-                        <div className='responsive-divs flex flex-row justify-around w-[400px] mx-auto gap-x-8'>
-                            <div></div>
-                            <div
-                                className={`bg-blue-200 h-40 w-[180px] ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''}`}
-                                id='Card 1'
-                                onClick={() => setSelectedCard('card1')}
+                        <div className='responsive-divs flex flex-row justify-around w-full mx-auto gap-x-8'>
+                            <Swiper
+                                effect={'flip'}
+                                grabCursor={true}
+                                modules={[EffectFlip,]}
+                                className="mySwiper w-[200px] h-[200px]"
                             >
-                            </div>
+                                <SwiperSlide>
+                                    <div
+                                        className={`bg-blue-200 h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
+                                        onClick={() => setSelectedCard('card1')}
+                                    >
+                                        <p className='text-black text-sm text-center'>What animal is this?</p>
+                                        <img className='w-2/3' src='giraffe.png' alt='Giraffe' />
+                                    </div>
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <div
+                                        className={`bg-blue-200 h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
+                                        onClick={() => setSelectedCard('card1')}
+                                    >
+                                        <p className='text-black text-xl text-center'>Giraffe</p>
+                                        
+                                    </div>
+                                </SwiperSlide>
+                            </Swiper>
                             <div
                                 className={`bg-blue-200 h-40 w-[180px] ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''}`}
                                 id='Card 2'
@@ -69,7 +105,7 @@ const AddCard = () => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => { if (isFormValid()) setOpenModal(false); }} disabled={!isFormValid()}>I accept</Button>
+                    <Button onClick={handleAcceptClick} disabled={!isFormValid()}>I accept</Button>
                     <Button color="gray" onClick={() => setOpenModal(false)}>
                         Decline
                     </Button>
