@@ -1,57 +1,18 @@
-"use client";
-import React, { useState, useEffect } from 'react';
+// addCard.tsx
+import React, { useState } from 'react';
 import { Modal, Button } from 'flowbite-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFlip } from 'swiper/modules';
-
 import 'swiper/css';
 import 'swiper/css/effect-flip';
 
-const AddCard = () => {
+const AddCard = ({ onCardAdded }: { onCardAdded: () => void }) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [selectedCard, setSelectedCard] = useState<null | 'card1' | 'card2'>(null);
     const [frontText, setFrontText] = useState<string>('');
     const [backText, setBackText] = useState<string>('');
     const [imageText, setImageText] = useState<string>('');
     const defaultImage = 'giraffe.png';
-
-    useEffect(() => {
-        if (selectedCard === 'card1') {
-            const frontTextElement = document.getElementById('card1-front-text');
-            const backTextElement = document.getElementById('card1-back-text');
-            const imageElement = document.getElementById('card1-image');
-
-            if (frontTextElement) {
-                frontTextElement.innerText = frontText;
-            }
-
-            if (backTextElement) {
-                backTextElement.innerText = backText;
-            }
-
-            if (imageElement) {
-                const img = new Image();
-                img.src = imageText;
-                img.onload = () => {
-                    imageElement.src = imageText;
-                };
-                img.onerror = () => {
-                    imageElement.src = defaultImage;
-                };
-            }
-        } else if (selectedCard === 'card2') {
-            const frontTextElement = document.getElementById('card2-front-text');
-            const backTextElement = document.getElementById('card2-back-text');
-
-            if (frontTextElement) {
-                frontTextElement.innerText = frontText;
-            }
-
-            if (backTextElement) {
-                backTextElement.innerText = backText;
-            }
-        }
-    }, [frontText, backText, imageText, selectedCard]);
 
     const isFormValid = () => {
         if (selectedCard === 'card1') {
@@ -64,12 +25,21 @@ const AddCard = () => {
 
     const handleAcceptClick = () => {
         if (isFormValid()) {
-            console.log('Front Text:', frontText);
-            console.log('Back Text:', backText);
-            if (selectedCard === 'card1') {
-                console.log('Image Text:', imageText);
-            }
+            const cardKeys = Object.keys(localStorage).filter(key => key.startsWith('cardData_'));
+            const nextKey = cardKeys.length + 1;
+            const keyName = `cardData_${nextKey}`;
+
+            const cardData = {
+                keyName,
+                selectedCard,
+                frontText,
+                backText,
+                imageText: selectedCard === 'card1' ? imageText : null
+            };
+            localStorage.setItem(keyName, JSON.stringify(cardData));
+
             setOpenModal(false);
+            onCardAdded();
         }
     };
 
@@ -100,8 +70,8 @@ const AddCard = () => {
                                         className={`bg-blue-200 h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                         onClick={() => setSelectedCard('card1')}
                                     >
-                                        <p className='text-wrap text-black text-sm text-center break-words' id='card1-front-text'>What animal is this?</p>
-                                        <img className='w-2/3' src={defaultImage} alt='Giraffe' id='card1-image'/>
+                                        <p className='text-wrap text-black text-sm text-center break-words'>{frontText}</p>
+                                        <img className='w-2/3' src={imageText || defaultImage} alt='Image' id='card1-image'/>
                                     </div>
                                 </SwiperSlide>
                                 <SwiperSlide>
@@ -109,7 +79,7 @@ const AddCard = () => {
                                         className={`bg-blue-200 h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                         onClick={() => setSelectedCard('card1')}
                                     >
-                                        <p className='text-wrap text-black text-xl text-center break-words' id='card1-back-text'>Giraffe</p>
+                                        <p className='text-wrap text-black text-xl text-center break-words'>{backText}</p>
                                     </div>
                                 </SwiperSlide>
                             </Swiper>
@@ -124,7 +94,7 @@ const AddCard = () => {
                                         className={`bg-blue-200 h-full w-full ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                         onClick={() => setSelectedCard('card2')}
                                     >
-                                        <p className='text-wrap text-black text-xl text-center break-words' id='card2-front-text'>What continent is Japan?</p>
+                                        <p className='text-wrap text-black text-xl text-center break-words'>{frontText}</p>
                                     </div>
                                 </SwiperSlide>
                                 <SwiperSlide>
@@ -132,7 +102,7 @@ const AddCard = () => {
                                         className={`bg-blue-200 h-full w-full ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                         onClick={() => setSelectedCard('card2')}
                                     >
-                                        <p className='text-wrap text-black text-2xl text-center break-words' id='card2-back-text'>Asia</p>
+                                        <p className='text-wrap text-black text-2xl text-center break-words'>{backText}</p>
                                     </div>
                                 </SwiperSlide>
                             </Swiper>
