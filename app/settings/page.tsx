@@ -1,9 +1,10 @@
 "use client"
 import React, { useState, useEffect, useCallback } from 'react';
-import Card from './Card';
-import AddCard from './AddCard';
+import Card from './card';
+import AddCard from './addCard';
 
 const Settings = () => {
+    // Step 2: Ensure that cardKeys is correctly defined
     const [cardKeys, setCardKeys] = useState<string[]>([]);
 
     const fetchCardKeys = useCallback(() => {
@@ -25,6 +26,7 @@ const Settings = () => {
 
     return (
         <div className="p-10">
+            {/* Step 3: Ensure cardKeys is correctly used in the map function */}
             {cardKeys.map(key => (
                 <Card key={key} cardKey={key} onCardEdited={handleCardEdited} />
             ))}

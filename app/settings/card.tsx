@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
-import EditCard from './EditCard';
+import EditCard from './editCard';
 
 const Card = ({ cardKey, onCardEdited }: { cardKey: string; onCardEdited: () => void; }) => {
     const [editModalOpen, setEditModalOpen] = useState(false);
@@ -35,14 +35,31 @@ const Card = ({ cardKey, onCardEdited }: { cardKey: string; onCardEdited: () => 
                         <div className="sm:ml-5 md:ml-10 xl:ml-14 2xl:ml-24">
                             <Menu>
                                 <MenuButton className="text-black">
-                                    <img src='' alt="Settings"/>
+                                    <img src='BurgerMenu.svg' alt="Set" className='mt-1'/>
                                 </MenuButton>
-                                <MenuItems>
+                                <MenuItems className="bg-purple-100 border border-black rounded-lg p-2 w-40 mt-4 -ml-28">
                                     <MenuItem>
-                                        <div onClick={openEditModal}>Edit Card</div>
+                                        {({ active }) => (
+                                            <div
+                                                className={`${
+                                                    active ? 'bg-purple-200' : ''
+                                                } p-2 text-black rounded-lg`}
+                                                onClick={openEditModal}
+                                            >
+                                                Edit Card
+                                            </div>
+                                        )}
                                     </MenuItem>
                                     <MenuItem>
-                                        <div>Delete Card</div>
+                                        {({ active }) => (
+                                            <div
+                                                className={`${
+                                                    active ? 'bg-purple-200' : ''
+                                                } p-2 text-black rounded-lg`}
+                                            >
+                                                Delete Card
+                                            </div>
+                                        )}
                                     </MenuItem>
                                 </MenuItems>
                             </Menu>
