@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Card from './card';
 import AddCard from './addCard';
 
+
 const Settings = () => {
     // Step 2: Ensure that cardKeys is correctly defined
     const [cardKeys, setCardKeys] = useState<string[]>([]);
@@ -20,6 +21,7 @@ const Settings = () => {
         fetchCardKeys();
     }, [fetchCardKeys]);
 
+    // Rerender after card is edited
     const handleCardEdited = useCallback(() => {
         fetchCardKeys();
     }, [fetchCardKeys]);

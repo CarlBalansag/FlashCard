@@ -1,10 +1,10 @@
-// addCard.tsx
 import React, { useState } from 'react';
 import { Modal, Button } from 'flowbite-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFlip } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-flip';
+import { CirclePicker } from 'react-color'; // Changed to CirclePicker
 
 const AddCard = ({ onCardAdded }: { onCardAdded: () => void }) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -12,7 +12,13 @@ const AddCard = ({ onCardAdded }: { onCardAdded: () => void }) => {
     const [frontText, setFrontText] = useState<string>('');
     const [backText, setBackText] = useState<string>('');
     const [imageText, setImageText] = useState<string>('');
+    const [color, setColor] = useState<string>('#f44336'); // Define color state here
     const defaultImage = 'giraffe.png';
+
+    const handleChangeComplete = (color: any) => {
+        setColor(color.hex);
+        console.log(color.hex);
+    };
 
     const isFormValid = () => {
         if (selectedCard === 'card1') {
@@ -122,12 +128,19 @@ const AddCard = ({ onCardAdded }: { onCardAdded: () => void }) => {
                                 value={backText}
                                 onChange={(e) => setBackText(e.target.value)}
                             />
-                            <div className={`${selectedCard === 'card1' ? 'blur-none' : 'blur-sm'}`}>
+                            <div className={`${selectedCard === 'card1' ? 'blur-none' : 'blur-sm'} pb-5`}>
                                 <p className='text-black mt-3'>Image</p>
                                 <input 
                                     className='text-black outline outline-1 pl-2 w-full'
                                     value={imageText}
                                     onChange={(e) => setImageText(e.target.value)}
+                                />
+                            </div>
+                            <div className='mt-3'>
+                                <CirclePicker // Using CirclePicker here
+                                    color={color}
+                                    onChangeComplete={handleChangeComplete}
+                                    colors={['#f44336', '#e91e63', '#9c27b0', '#673ab7']}
                                 />
                             </div>
                         </div>

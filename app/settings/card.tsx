@@ -37,7 +37,8 @@ const Card = ({ cardKey, onCardEdited }: { cardKey: string; onCardEdited: () => 
                                 <MenuButton className="text-black">
                                     <img src='BurgerMenu.svg' alt="Set" className='mt-1'/>
                                 </MenuButton>
-                                <MenuItems className="bg-purple-100 border border-black rounded-lg p-2 w-40 mt-4 -ml-28">
+                                {/* <MenuItems className="bg-purple-100 border border-black rounded-lg p-2 w-40 mt-4 -ml-28"> */}
+                                <MenuItems className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-purple-100 ring-1 ring-black ring-opacity-5 focus:outline-none z-50 border border-black rounded-lg p-2 w-40 mt-4 ml-28 mr-4       ">
                                     <MenuItem>
                                         {({ active }) => (
                                             <div

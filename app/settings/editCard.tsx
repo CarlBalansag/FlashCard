@@ -30,7 +30,7 @@ const EditCard = ({ cardData, isOpen, onClose, onSave }: { cardData: any; isOpen
                 imageText: selectedCard === 'card1' ? imageText : null
             };
 
-            onSave(updatedCardData); // Call onSave function passed from parent component
+            onSave(updatedCardData); // Call onSave function passed from parent component to update and trigger rerender
         }
     };
 
