@@ -32,13 +32,16 @@ const Card = ({ cardKey, onCardEdited }: { cardKey: string; onCardEdited: () => 
                 <div className="grow h-14 text-black outline outline-2 outline-offset-2 rounded-lg">
                     <div className="grid grid-cols-10">
                         <div className="col-span-9 ml-2 mt-4">{selectedCardData?.frontText}</div>
-                        <div className="sm:ml-5 md:ml-10 xl:ml-14 2xl:ml-24">
+                        <div className="sm:ml-5 md:ml-10 xl:ml-14 2xl:ml-24 flex items-center justify-center">
                             <Menu>
-                                <MenuButton className="text-black">
-                                    <img src='BurgerMenu.svg' alt="Set" className='mt-1'/>
+                                <MenuButton className="text-black flex items-center justify-center w-12 h-12 pt-2 rounded-full ">
+                                    <img
+                                        src="BurgerMenu.svg"
+                                        alt="Set"
+                                        className="w-12 h-14 object-contain"
+                                    />
                                 </MenuButton>
-                                {/* <MenuItems className="bg-purple-100 border border-black rounded-lg p-2 w-40 mt-4 -ml-28"> */}
-                                <MenuItems className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-purple-100 ring-1 ring-black ring-opacity-5 focus:outline-none z-50 border border-black rounded-lg p-2 w-40 mt-4 ml-28 mr-4       ">
+                                <MenuItems className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-purple-100 ring-1 ring-black ring-opacity-5 focus:outline-none z-50 border border-black rounded-lg p-2 w-40 mt-4 ml-28 mr-4">
                                     <MenuItem>
                                         {({ active }) => (
                                             <div
