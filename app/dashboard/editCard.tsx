@@ -4,12 +4,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFlip } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-flip';
+import { CirclePicker } from 'react-color';
 
 const EditCard = ({ cardData, isOpen, onClose, onSave }: { cardData: any; isOpen: boolean; onClose: () => void; onSave: (updatedCardData: any) => void; }) => {
     const [selectedCard, setSelectedCard] = useState<'card1' | 'card2'>(cardData.selectedCard);
     const [frontText, setFrontText] = useState<string>(cardData.frontText);
     const [backText, setBackText] = useState<string>(cardData.backText);
     const [imageText, setImageText] = useState<string>(cardData.imageText || '');
+    const [color, setColor] = useState<string>(cardData.flashCardColor || '#f44336');
+
+    const handleChangeComplete = (color: any) => {
+        setColor(color.hex);
+    };
 
     const isFormValid = () => {
         if (selectedCard === 'card1') {
@@ -27,10 +33,11 @@ const EditCard = ({ cardData, isOpen, onClose, onSave }: { cardData: any; isOpen
                 selectedCard,
                 frontText,
                 backText,
-                imageText: selectedCard === 'card1' ? imageText : null
+                imageText: selectedCard === 'card1' ? imageText : null,
+                flashCardColor: color,
             };
 
-            onSave(updatedCardData); // Call onSave function passed from parent component to update and trigger rerender
+            onSave(updatedCardData);  // Notify parent to save the updated data
         }
     };
 
@@ -48,7 +55,10 @@ const EditCard = ({ cardData, isOpen, onClose, onSave }: { cardData: any; isOpen
                         >
                             <SwiperSlide>
                                 <div
-                                    className={`bg-blue-200 h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
+                                    style={{
+                                        backgroundColor: color || '#bfdbfe',
+                                    }}
+                                    className={`h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                     onClick={() => setSelectedCard('card1')}
                                 >
                                     <p className='text-wrap text-black text-sm text-center break-words'>{frontText}</p>
@@ -57,7 +67,10 @@ const EditCard = ({ cardData, isOpen, onClose, onSave }: { cardData: any; isOpen
                             </SwiperSlide>
                             <SwiperSlide>
                                 <div
-                                    className={`bg-blue-200 h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
+                                    style={{
+                                        backgroundColor: color || '#bfdbfe',
+                                    }}
+                                    className={`h-full w-full ${selectedCard === 'card1' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                     onClick={() => setSelectedCard('card1')}
                                 >
                                     <p className='text-wrap text-black text-xl text-center break-words'>{backText}</p>
@@ -72,7 +85,10 @@ const EditCard = ({ cardData, isOpen, onClose, onSave }: { cardData: any; isOpen
                         >
                             <SwiperSlide>
                                 <div
-                                    className={`bg-blue-200 h-full w-full ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
+                                    style={{
+                                        backgroundColor: color || '#bfdbfe',
+                                    }}
+                                    className={`h-full w-full ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                     onClick={() => setSelectedCard('card2')}
                                 >
                                     <p className='text-wrap text-black text-xl text-center break-words'>{frontText}</p>
@@ -80,7 +96,10 @@ const EditCard = ({ cardData, isOpen, onClose, onSave }: { cardData: any; isOpen
                             </SwiperSlide>
                             <SwiperSlide>
                                 <div
-                                    className={`bg-blue-200 h-full w-full ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
+                                    style={{
+                                        backgroundColor: color || '#bfdbfe',
+                                    }}
+                                    className={`h-full w-full ${selectedCard === 'card2' ? 'outline outline-3 outline-black outline-offset-4' : ''} flex flex-col items-center justify-center`}
                                     onClick={() => setSelectedCard('card2')}
                                 >
                                     <p className='text-wrap text-black text-2xl text-center break-words'>{backText}</p>
@@ -103,12 +122,22 @@ const EditCard = ({ cardData, isOpen, onClose, onSave }: { cardData: any; isOpen
                             value={backText}
                             onChange={(e) => setBackText(e.target.value)}
                         />
-                        <div className={`${selectedCard === 'card1' ? 'blur-none' : 'blur-sm'}`}>
+                        <div className={`${selectedCard === 'card1' ? 'blur-none' : 'blur-sm'} pb-5`}>
                             <p className='text-black mt-3'>Image</p>
                             <input 
                                 className='text-black outline outline-1 pl-2 w-full'
                                 value={imageText}
                                 onChange={(e) => setImageText(e.target.value)}
+                            />
+                        </div>
+                        <div className='mt-2'>
+                            <CirclePicker
+                                color={color}
+                                onChangeComplete={handleChangeComplete}
+                                colors={['#79aab1', '#cadef7', '#e1978e', '#d0b1b9', '#ba8351']}
+                                width="560px"
+                                circleSize={35}
+                                circleSpacing={10}
                             />
                         </div>
                     </div>
