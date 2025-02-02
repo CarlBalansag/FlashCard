@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -34,3 +37,47 @@ body {
 .break-words {
   word-break: break-word;
 }
+
+.btn {
+  position: relative;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: 140px; /* Button size */
+  height: 50px; /* Button size */
+}
+
+.btn span {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 25%;
+  left: -10%;
+  transform: translateY(-50%);
+  transition: opacity 0.5s; /* Smooth opacity transition */
+}
+
+.btn-text-one {
+  opacity: 1; /* Make front text visible initially */
+}
+
+.btn-text-two {
+  opacity: 0; /* Make back text invisible initially */
+}
+
+.btn:hover .btn-text-one {
+  opacity: 0; /* Hide front text on hover */
+}
+
+.btn:hover .btn-text-two {
+  opacity: 1; /* Show back text on hover */
+}
+
+
+
+
+
+

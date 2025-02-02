@@ -37,10 +37,15 @@ const Card = ({ cardKey, onCardEdited }: { cardKey: string; onCardEdited: () => 
                 </div>
                 <div className="grow h-14 text-black outline outline-2 outline-offset-2 rounded-lg">
                     <div className="grid grid-cols-10">
-                        <div className="col-span-9 ml-2 mt-4">{selectedCardData?.frontText}</div>
+                        <div className="col-span-9 ml-2 mt-4">
+                            <button className="btn">
+                                <span className="btn-text-one">{selectedCardData?.frontText}</span>
+                                <span className="btn-text-two">{selectedCardData?.backText}</span>
+                            </button>
+                        </div>
                         <div className="sm:ml-5 md:ml-10 xl:ml-14 2xl:ml-24 flex items-center justify-center">
                             <Menu>
-                                <MenuButton className="text-black flex items-center justify-center w-12 h-12 pt-2 rounded-full ml-5">
+                                <MenuButton className="text-black flex items-center justify-center w-12 h-12 pt-2 rounded-full ml-5 pr-5 pb-6">
                                     <Hamburger />
                                 </MenuButton>
                                 <MenuItems
