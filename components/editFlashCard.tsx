@@ -1,54 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 
 const EditFlashCard = () => {
-return (
-    <StyledWrapper>
-    <button className="button">Edit Flash Cards</button>
-    </StyledWrapper>
-);
-}
-
-const StyledWrapper = styled.div`
-.button {
-    padding: 1em 2em;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: #5e41de99;
-    transition: all 1000ms;
-    font-size: 15px;
-    position: relative;
-    overflow: hidden;
-    outline: 2px solid #5e41de99;
-    width: 250px;
-}
-
-button:hover {
-    color: #ffffff;
-    transform: scale(1.1);
-    outline: 2px solid #5e41de99;
-    box-shadow: 4px 5px 17px -4px #5e41de99;
-}
-
-button::before {
-    content: "";
-    position: absolute;
-    left: -50px;
-    top: 0;
-    width: 0;
-    height: 100%;
-    background-color: #5e41de99;
-    transform: skewX(45deg);
-    z-index: -1;
-    transition: width 1000ms;
-}
-
-button:hover::before {
-    width: 250%;
-}`;
+    return (
+        <button className="relative overflow-hidden px-8 py-4 rounded-lg font-bold text-[#5e41de99] uppercase tracking-wider text-sm transition-all duration-1000 ease-in-out outline outline-2 outline-[#5e41de99] hover:text-white hover:scale-110 hover:outline-[#5e41de99] hover:shadow-[4px_5px_17px_-4px_#5e41de99] w-[250px] group">
+            Edit Flash Cards
+            {/* Shine Effect */}
+            <div className="absolute -left-[50px] top-0 w-0 h-full bg-[#5e41de99] transform skew-x-[45deg] z-[-1] transition-all duration-1000 ease-in-out group-hover:w-[250%]"></div>
+        </button>
+    );
+};
 
 export default EditFlashCard;

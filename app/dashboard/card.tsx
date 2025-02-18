@@ -32,10 +32,8 @@ const Card = ({ cardKey, onCardEdited }: { cardKey: string; onCardEdited: () => 
     return (
         <>
             <div className="flex mt-10">
-                <div className="flex-none w-14 h-14">
-                    {/* Placeholder for image or icon */}
                 </div>
-                <div className="grow h-14 text-black outline outline-2 outline-offset-2 rounded-lg">
+                <div className="grow h-14 text-black outline outline-2 outline-offset-2 rounded-lg btg ">
                     <div className="grid grid-cols-10">
                         <div className="col-span-9 ml-2 mt-4">
                             <button className="btn">
@@ -81,7 +79,6 @@ const Card = ({ cardKey, onCardEdited }: { cardKey: string; onCardEdited: () => 
                         </div>
                     </div>
                 </div>
-            </div>
 
             {editModalOpen && selectedCardData && (
                 <EditCard

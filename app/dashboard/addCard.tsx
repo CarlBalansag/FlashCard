@@ -16,6 +16,7 @@ const AddCard = ({ onCardAdded }: { onCardAdded: () => void }) => {
     const [imageText, setImageText] = useState<string>('');
     const [color, setColor] = useState<string>('#f44336');
     const defaultImage = 'giraffe.png';
+    const imageIcon = 'imageAddIcon.png';
 
     const handleChangeComplete = (color: any) => {
         setColor(color.hex);
@@ -203,18 +204,38 @@ const AddCard = ({ onCardAdded }: { onCardAdded: () => void }) => {
                                         value={backText}
                                         onChange={(e) => setBackText(e.target.value)}
                                     />
-                                    <div
-                                        className={`${
-                                            selectedCard === 'card1' ? 'blur-none' : 'blur-sm'
-                                        } pb-5`}
-                                    >
+
+                                    <div id="imageInput" className={`${selectedCard === 'card1' ? 'blur-none' : 'blur-sm'} pb-5`}>
                                         <p className="text-black mt-3">Front Image</p>
-                                        <input
-                                            className="text-black outline outline-1 pl-2 w-full rounded-lg"
-                                            value={imageText}
-                                            onChange={(e) => setImageText(e.target.value)}
-                                        />
+                                        <div className="flex items-center">
+                                            <input
+                                                className="text-black outline outline-1 pl-2 flex-grow rounded-lg"
+                                                value={imageText}
+                                                onChange={(e) => setImageText(e.target.value)}
+                                                placeholder="Enter image URL or upload file"
+                                            />
+                                            <label htmlFor="fileInput" className="cursor-pointer">
+                                                <img src={imageIcon} className='w-11 ml-3' alt="Upload Icon"/>
+                                            </label>
+                                            <input
+                                                type="file"
+                                                accept="image/png, image/jpeg, image/gif, image/svg+xml"
+                                                onChange={(e) => {
+                                                    const file = e.target.files?.[0];
+                                                    if (file) {
+                                                        const reader = new FileReader();
+                                                        reader.onloadend = () => {
+                                                            setImageText(reader.result as string);
+                                                        };
+                                                        reader.readAsDataURL(file);
+                                                    }
+                                                }}
+                                                className="hidden"
+                                                id="fileInput"
+                                            />
+                                        </div>
                                     </div>
+
                                     <div className="mt-2">
                                         <CirclePicker
                                             color={color}
