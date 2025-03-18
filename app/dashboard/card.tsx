@@ -35,7 +35,7 @@ const Card = ({ cardKey, onCardEdited }: { cardKey: string; onCardEdited: () => 
                 </div>
                 <div className="grow h-14 text-black outline outline-2 outline-offset-2 rounded-lg btg ">
                     <div className="grid grid-cols-10">
-                        <div className="col-span-9 ml-2 mt-4">
+                        <div className="col-span-9 mt-4">
                             <button className="btn">
                                 <span className="btn-text-one">{selectedCardData?.frontText}</span>
                                 <span className="btn-text-two">{selectedCardData?.backText}</span>

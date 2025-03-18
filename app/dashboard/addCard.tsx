@@ -36,7 +36,7 @@ const AddCard = ({ onCardAdded }: { onCardAdded: () => void }) => {
             const cardKeys = Object.keys(localStorage).filter(key => key.startsWith('cardData_'));
             const nextKey = cardKeys.length + 1;
             const keyName = `cardData_${nextKey}`;
-
+    
             const cardData = {
                 keyName,
                 selectedCard,
@@ -46,11 +46,19 @@ const AddCard = ({ onCardAdded }: { onCardAdded: () => void }) => {
                 flashCardColor: color,
             };
             localStorage.setItem(keyName, JSON.stringify(cardData));
-
+    
+            // Reset state
+            setSelectedCard(null);
+            setFrontText('');
+            setBackText('');
+            setImageText('');
+            setColor('#f44336');
+    
             setOpenModal(false);
             onCardAdded();
         }
     };
+    
 
     return (
         <>
